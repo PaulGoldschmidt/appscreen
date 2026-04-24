@@ -8060,9 +8060,10 @@ async function exportCurrent() {
     // Ensure canvas is up-to-date (especially important for 3D mode)
     updateCanvas();
 
+    const { mime, ext, quality } = getExportEncoding();
     const link = document.createElement('a');
-    link.download = `screenshot-${state.selectedIndex + 1}.jpg`;
-    link.href = canvas.toDataURL('image/jpeg', 1.0);
+    link.download = `screenshot-${state.selectedIndex + 1}.${ext}`;
+    link.href = quality !== undefined ? canvas.toDataURL(mime, quality) : canvas.toDataURL(mime);
     link.click();
 }
 
@@ -8144,10 +8145,11 @@ async function exportAllForLanguage(lang) {
         await new Promise(resolve => setTimeout(resolve, 100));
 
         // Get canvas data as base64, strip the data URL prefix
-        const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
-        const base64Data = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
+        const { mime, ext, quality } = getExportEncoding();
+        const dataUrl = quality !== undefined ? canvas.toDataURL(mime, quality) : canvas.toDataURL(mime);
+        const base64Data = dataUrl.replace(/^data:[^;]+;base64,/, '');
 
-        zip.file(`screenshot-${i + 1}.jpg`, base64Data, { base64: true });
+        zip.file(`screenshot-${i + 1}.${ext}`, base64Data, { base64: true });
     }
 
     // Restore original settings
