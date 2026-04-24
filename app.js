@@ -5782,6 +5782,12 @@ function openSettingsModal() {
         btn.classList.toggle('active', btn.dataset.theme === savedTheme);
     });
 
+    // Load saved export format preference
+    const savedFormat = getExportFormat();
+    document.querySelectorAll('#export-format-selector button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.format === savedFormat);
+    });
+
     document.getElementById('settings-modal').classList.add('visible');
 }
 
