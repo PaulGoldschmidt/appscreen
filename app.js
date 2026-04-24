@@ -5804,6 +5804,11 @@ function saveSettings() {
     localStorage.setItem('themePreference', themePreference);
     applyTheme(themePreference);
 
+    // Save export format preference
+    const activeFormatBtn = document.querySelector('#export-format-selector button.active');
+    const exportFormat = activeFormatBtn ? activeFormatBtn.dataset.format : 'jpeg';
+    localStorage.setItem('exportFormat', exportFormat);
+
     // Save selected provider
     const selectedProvider = document.querySelector('input[name="ai-provider"]:checked').value;
     localStorage.setItem('aiProvider', selectedProvider);
