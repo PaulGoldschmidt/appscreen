@@ -1254,7 +1254,7 @@ const deviceDimensions = {
 
 // DOM elements
 const canvas = document.getElementById('preview-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { alpha: false });
 const canvasLeft = document.getElementById('preview-canvas-left');
 const ctxLeft = canvasLeft.getContext('2d');
 const canvasRight = document.getElementById('preview-canvas-right');
