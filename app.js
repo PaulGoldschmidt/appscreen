@@ -3977,6 +3977,14 @@ function setupEventListeners() {
         });
     });
 
+    // Export format selector buttons
+    document.querySelectorAll('#export-format-selector button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#export-format-selector button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
     // Provider radio buttons
     document.querySelectorAll('input[name="ai-provider"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
@@ -8184,11 +8192,12 @@ async function exportAllLanguages() {
             await new Promise(resolve => setTimeout(resolve, 100));
 
             // Get canvas data as base64, strip the data URL prefix
-            const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
-            const base64Data = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
+            const { mime, ext, quality } = getExportEncoding();
+            const dataUrl = quality !== undefined ? canvas.toDataURL(mime, quality) : canvas.toDataURL(mime);
+            const base64Data = dataUrl.replace(/^data:[^;]+;base64,/, '');
 
             // Use language code as folder name
-            zip.file(`${lang}/screenshot-${i + 1}.jpg`, base64Data, { base64: true });
+            zip.file(`${lang}/screenshot-${i + 1}.${ext}`, base64Data, { base64: true });
         }
     }
 
