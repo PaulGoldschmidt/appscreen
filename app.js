@@ -8029,8 +8029,8 @@ async function exportCurrent() {
     updateCanvas();
 
     const link = document.createElement('a');
-    link.download = `screenshot-${state.selectedIndex + 1}.png`;
-    link.href = canvas.toDataURL('image/png');
+    link.download = `screenshot-${state.selectedIndex + 1}.jpg`;
+    link.href = canvas.toDataURL('image/jpeg', 1.0);
     link.click();
 }
 
@@ -8112,10 +8112,10 @@ async function exportAllForLanguage(lang) {
         await new Promise(resolve => setTimeout(resolve, 100));
 
         // Get canvas data as base64, strip the data URL prefix
-        const dataUrl = canvas.toDataURL('image/png');
-        const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+        const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
+        const base64Data = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
 
-        zip.file(`screenshot-${i + 1}.png`, base64Data, { base64: true });
+        zip.file(`screenshot-${i + 1}.jpg`, base64Data, { base64: true });
     }
 
     // Restore original settings
@@ -8184,11 +8184,11 @@ async function exportAllLanguages() {
             await new Promise(resolve => setTimeout(resolve, 100));
 
             // Get canvas data as base64, strip the data URL prefix
-            const dataUrl = canvas.toDataURL('image/png');
-            const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+            const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
+            const base64Data = dataUrl.replace(/^data:image\/jpeg;base64,/, '');
 
             // Use language code as folder name
-            zip.file(`${lang}/screenshot-${i + 1}.png`, base64Data, { base64: true });
+            zip.file(`${lang}/screenshot-${i + 1}.jpg`, base64Data, { base64: true });
         }
     }
 
