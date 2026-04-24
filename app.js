@@ -8038,6 +8038,19 @@ function hexToRgba(hex, alpha) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+function getExportFormat() {
+    const stored = localStorage.getItem('exportFormat');
+    return stored === 'png' ? 'png' : 'jpeg';
+}
+
+function getExportEncoding() {
+    const format = getExportFormat();
+    if (format === 'png') {
+        return { mime: 'image/png', ext: 'png', quality: undefined };
+    }
+    return { mime: 'image/jpeg', ext: 'jpg', quality: 1.0 };
+}
+
 async function exportCurrent() {
     if (state.screenshots.length === 0) {
         await showAppAlert('Please upload a screenshot first', 'info');
